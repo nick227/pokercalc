@@ -1,0 +1,116 @@
+
+        body{
+        	background:#283149;
+        	font-family: Roboto Condensed;
+        }
+        h3{
+        	margin:0;padding:0;
+        }
+        .row{
+        	display: flex;
+        	flex-direction: row;
+        	width: 100%;
+        }
+        .panel{
+        	float: left;
+        	border: 16px solid black;
+        	margin:2px;
+        	padding:5px 10px;
+        	width:365px;
+        	min-height: 200px;
+        	transition: height 1s linear;
+        	text-align: left;
+        	overflow-y: auto;
+        	position: relative;
+        	background: white;
+        }
+        .panel .log{
+        	position: absolute;
+        	bottom: 0
+        }
+        .true{
+        	border-color: #76FF03;
+            background-color: #F1F8E9;
+        }
+        .col{
+        	float:left;
+        }
+        .info-box{
+        	clear: left;
+        	width:96%;
+        	margin-top: 11px;
+        	min-height: 250px;
+        }
+        .deck-cards{
+        	clear: left;
+        	margin-top: 15px;
+        	max-width:1115px;
+        }
+        .hole-cards{
+            border:2px solid white;
+        	background: transparent;
+        	height: 150px;
+        	width:200px;
+        }
+        .table-cards{
+            border:2px solid white;
+        	height: 150px;
+        	width:500px;
+        	background:transparent;
+        }
+        .table-cards .card, .hole-cards .card{
+            width:100px;
+            height:150px;
+
+        }
+    	.card{
+    		float: left;
+    		width:73px;
+    		height:73px;
+    		position: relative;
+            background-color: #404b69;
+    		background-size: contain;
+    		background-repeat: no-repeat;
+    		background-position: center center; 
+    		font-size: 1.6em;
+    		text-transform: capitalize;
+    		color:#fff;
+    		display: flex;
+    		flex-direction: column;
+    		justify-content: center;
+    		align-items: center;
+            outline: 1px solid black;
+    	}
+    	.deck-cards .club, .deck-cards .spade{
+    		background-color:gray;
+    	}
+    	.deck-cards .heart, .deck-cards .diamond{
+    		background-color:darkgray;
+
+    	}
+        .deck-cards .card{
+    		border: 5px solid white;
+        }
+    	.deck-cards .card:hover{
+    		border-color:black;
+    	}
+    	.deck-cards .card:active, .deck-cards .card.active{
+    		border-color:black;background-color:#00818a;
+    	}
+    	.heart{
+    		background-image: url(./img/heart.png);
+    	}
+    	.spade{
+    		background-image: url(./img/spade.png);
+    	}
+    	.diamond{
+    		background-image: url(./img/diamond.png);
+    	}
+    	.club{
+    		background-image: url(./img/club.png);
+    	}
+        .btn-clear{
+            float:left;
+            font-size:1.5em;
+            padding:5px 11px;
+        }
