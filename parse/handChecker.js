@@ -138,16 +138,12 @@ var handChecks = [{name:'High Card'/*0*/, val:1, fn:function(matches, cardsObj){
 							console.log(matches);
 			 				if(matches.num === 4){
 			 					for(var i = 0, length1 = matches.tmp.length; i < length1; i++){
-			 						var item = matches.tmp[i];
-			 						console.log(item, typeof item);/*
-			 						item.forEach( function(cards, index) {
-			 						cards.forEach( function(match, i) {
-			 							obj[match.card] = (typeof obj[match.card] === 'number') ? obj[match.card] + 1 : 1;
-			 						});
-			 						});*/
+			 						var match = matches.tmp[i];
+			 						obj[match.card] = (typeof obj[match.card] === 'number') ? obj[match.card] + 1 : 1;
 			 					}
 			 					var vals = Object.values(obj);
-			 					if(vals[0]===6 && vals[1]===2){
+			 					vals.sort();
+			 					if(vals[0]===2 && vals[1]===3){
 									var res = {has:true, res:matches.tmp};
 			 					}
 			 				}
