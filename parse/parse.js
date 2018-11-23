@@ -290,7 +290,7 @@ function getPosition(round){
     return "UTG";
   }
   var position = r.findIndex(function(e){
-    return hasUsername(e);
+    return checkUser(e);
   });
   return "UTG+" + position;
 }
