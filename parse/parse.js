@@ -97,10 +97,6 @@ function getRaises(obj){
   });
   return {raises:raises, raised:raised};
 }
-function checkUser(str){
-  return str.indexOf(username) > -1 || str.indexOf(username2) > -1 || str.indexOf(username3) > -1;
-
-}
 function getDealLuck(result){
   var res = 0;
   result.forEach(function(item){
@@ -271,8 +267,9 @@ function getAllins(obj){
   });
   return res;
 }
-function hasUsername(line){
-  return (typeof line === 'string' && (checkUser(line)));
+function checkUser(str){
+  return str.indexOf(username) > -1 || str.indexOf(username2) > -1 || str.indexOf(username3) > -1;
+
 }
 function getPosition(round){
   var res = null;
@@ -280,16 +277,16 @@ function getPosition(round){
   var bb = summary[summary.length-1].split(":")[0];
   var sb = summary[summary.length-2].split(":")[0];
   var r = getFirstRound(round);
-  if(hasUsername(bb)){
+  if(checkUser(bb)){
     return "big blind";
   }
-  if(hasUsername(sb)){
+  if(checkUser(sb)){
     return "small blind";
   }
-  if(hasUsername(r[r.length-3])){
+  if(checkUser(r[r.length-3])){
     return "button";
   }
-  if(hasUsername(r[0])){
+  if(checkUser(r[0])){
     return "UTG";
   }
   var position = r.findIndex(function(e){
