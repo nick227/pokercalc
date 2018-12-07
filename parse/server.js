@@ -11,8 +11,8 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-var url1 = '../../../../Users/BaronJack/AppData/Local/PokerStars/HandHistory/nicholasj25/';
-var url2 = './history/';
+var url1 = '../../../../Users/BaronJack/AppData/Local/PokerStars';
+var url2 = '.';
 
 app.get('/', (req, res) => {
 	var queryString = url.parse(req.url).query;

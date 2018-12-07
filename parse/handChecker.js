@@ -51,29 +51,50 @@ function compare(needle, obj, type){
 	res = {num:hits, tmp:tmp};
 	return res;
 }
+function getGrouping(matches){
+	var obj={};
+	for(var i = 0, length1 = matches.tmp.length; i < length1; i++){
+		var match = matches.tmp[i];
+		obj[match.card] = (typeof obj[match.card] === 'number') ? obj[match.card] + 1 : 1;
+	}
+	var vals = Object.values(obj);
+	vals.sort();
+	return vals;
+
+}
 var handChecks = [{name:'High Card'/*0*/, val:1, fn:function(matches, cardsObj){
 												cards = scoreHand(cardsObj), res=[], res.push(cardsObj[0]);
 												return {has:true, res:res};
 											}}, 
 				 {name:'One Pair'/*1*/, val:2, fn:function(matches, cardsObj){
 				 								var res = {has:false, res:null};
-				 								if(matches.num === 1){
-				 									res = {has:true, res:matches.tmp};
+				 								if(matches.num === 2){
+				 									var val = getGrouping(matches);
+				 									if(val.length===1){
+				 										res = {has:true, res:matches.tmp};	
+				 									}
 				 								}
 				 								return res;
 				 						}
 				 },
 				 {name:'Two Pair'/*2*/, val:3, tmp:[], fn:function(matches, cardsObj){
-				 								var res = {has:false, res:null}, tmp=[];
-				 								if(matches.num===2){
-				 									res = {has:true, res:matches.tmp};
-				 								}
+				 								var res = {has:false, res:null}, tmp=[], obj={};
+				 								
+								 				if(matches.num === 3){
+								 					var vals = getGrouping(matches);
+								 					if(vals[0]===2 && vals[1]===2){
+								 						res = {has:true, tmp:matches.tmp}
+								 					}
+								 				}
 				 								return res;
 				 							}}, 
 				 {name:'Three of a Kind'/*3*/, val:4, fn:function(matches, cardsObj){
 				 								var res = {has:false, res:null}, tmpO={};
 				 								if(matches.num === 3){
-				 									res = {has:true, res:matches.tmp};
+								 					var vals = getGrouping(matches);
+								 					if(vals[0]===3){
+				 										res = {has:true, res:matches.tmp};
+								 					}
 				 								}
 				 								return res;
 
@@ -135,7 +156,6 @@ var handChecks = [{name:'High Card'/*0*/, val:1, fn:function(matches, cardsObj){
 							var res = {has:false, res:null};
 							var c = null, tmp=[], match=null;
 							var obj = {};
-							console.log(matches);
 			 				if(matches.num === 4){
 			 					for(var i = 0, length1 = matches.tmp.length; i < length1; i++){
 			 						var match = matches.tmp[i];

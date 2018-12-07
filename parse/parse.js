@@ -2,27 +2,60 @@ var fs = require('fs');
 var _ = require('underscore');
 var handValues = require('./handVals.js');
 var username = 'nicholasj25', username2 = 'hzane', username3 = 'nitwit227';
+var usernames = [username];
 var global_obj_counter = {};
 var handChecker = require('./handChecker.js');
 module.exports = start;
 
 function start(dirname, callback){
-var res = [];
-
-  fs.readdir(dirname, function(err, filenames) {
-    if (err) {
-      onError(err);
-      return;
+  var res = [];
+    for(var i = 0, length1 = usernames.length; i < length1; i++){
+      var username = usernames[i];
+      res = res.concat(_parse(dirname, username));
     }
-    filenames.forEach(function(filename) {
-        var d = fs.readFileSync(dirname + filename, 'utf-8');
-        var obj = parsePokerStarsTournament(d);
-        res.push(obj);
-    });
     callback(res);
-  });
 }
-function parsePokerStarsTournament(tournament){
+function _parse(dirname, username){
+  var res = [];
+  var tourneySumFiles = [];
+  var sumDirName = dirname+'/TournSummary/'+username+'/';
+  var handsDirName = dirname+'/HandHistory/'+username+'/';
+  fs.readdirSync(sumDirName).forEach(file => {
+    tourneySumFiles.push(file);
+      });
+    fs.readdirSync(handsDirName).forEach(filename => {
+          var d = fs.readFileSync(handsDirName + filename, 'utf-8');
+          var sum = summaryCheck(filename, tourneySumFiles, sumDirName);
+          var obj = parsePokerStarsTournament(d, sum);
+          res.push(obj);
+      });
+    return res;
+
+}
+function clearBlanks(obj){
+  var res = [];
+  for(var i = 0, length1 = obj.length; i < length1; i++){
+    var o = obj[i];
+    if(o.length){
+      res.push(o);
+    }
+  }
+  return res;
+}
+function summaryCheck(filename, tourneySumFiles, dirname){
+  var tourneyId = filename.substring(filename.indexOf('T'), filename.indexOf(" ", filename.indexOf('T')));
+  for(var i = 0, length1 = tourneySumFiles.length; i < length1; i++){
+    var sumFile = tourneySumFiles[i];
+    if(sumFile.indexOf(tourneyId) > -1){
+        var d = fs.readFileSync(dirname + sumFile, 'utf-8');
+        var res = d.split("\r\n",);
+        res = clearBlanks(res);
+      return res[res.length-1];
+    }
+  }
+  return false;
+}
+function parsePokerStarsTournament(tournament, summaryStr){
   global_obj_counter = {};
   var allRounds = tournament.split("\r\n\r\n\r\n\r\n");
   var result = {items:[]};
@@ -30,12 +63,12 @@ function parsePokerStarsTournament(tournament){
   result.details = getDetails(allRounds);
   result.counter = sortObj(calcCount(global_obj_counter));
   result.luck = getLuck(result.items).toFixed(2);
-  result.dealLuck = Math.round(getDealLuck(result.items));
-  result.handRanks = getHandRanks(result.items);
+  result.dealLuck = Math.round(getDealLuck(result.items)/allRounds.length);
+  result.handRanks = getHandRanks(result.items)/allRounds.length;
   result.raises = getRaises(allRounds).raises;
   result.allins = getAllins(result.items);
   result.raised = getRaises(allRounds).raised;
-  result.tourneySum = getSummary(allRounds);
+  result.tourneySum = summaryStr.length ? summaryStr : getSummary(allRounds);
 
   return result;
 }
@@ -268,6 +301,7 @@ function getAllins(obj){
   return res;
 }
 function checkUser(str){
+  if(typeof str !== 'string'){return false;}
   return str.indexOf(username) > -1 || str.indexOf(username2) > -1 || str.indexOf(username3) > -1;
 
 }

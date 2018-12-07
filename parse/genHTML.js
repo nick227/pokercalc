@@ -34,7 +34,7 @@ handRanksAvg  = handRanksAvg/data.length;
 					body{width:100%;height:100%;font-size:18px;font-family:tahoma}
 					h1,h2,h3,h4,h5{margin:0}
 					.hidden{display:none !important;}
-					.toggleNext{color:blue;text-decoration:underline;cursor:pointer;width: 100%;background:lightgray;}
+					.toggleNext{color:blue;text-decoration:underline;cursor:pointer;width: 100%;}
 					.bottom{position:absolute;bottom:5px;left:0}
 					.bgdarker{background-color:rgba(0,0,0,.2)}
 					.fold-preflop{background:#7b7c7c;color:#fff;}
@@ -45,28 +45,28 @@ handRanksAvg  = handRanksAvg/data.length;
 					.won-showdown{background:green;color:#fff;}
 					.lost-showdown{background:#000;color:#fff;}
 					.sitting-out{background:#acg;color:#fff;}
-					.row{display:flex;}.row > div{min-width:150px;}
+					.row{display:flex;}.row > div{}
 					.row a{padding:0 8px;text-decoration:underline;}
 					.nav{cursor:pointer;}
 					.nav:hover{background:gray;white-space:nowrap;}
 					.grid{display:flex;flex-wrap:wrap;  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);}
-					.div-hole-cards{font-size:28px;background:white;color:black;}
+					.div-hole-cards{font-size:28px;background:white;color:black;padding-left:0 !important;}
 					.div-hole-cards img{height:20px;margin:0 2px;}
-					.fullwidth{width:100% !important; flex: 1 1 100% !important;}
-					.item{border:6px solid white;margin:0;padding:0;overflow-x:hidden;overflow-y:auto;display:flex;flex-direction:column;position:relative;width:17%;}
-					.item > div{border:1px solid #fff;padding:3px 16px; min-width:130px;white-space:nowrap;}
+					.full-width{width:100% !important; flex: 1 1 100% !important;}
+					.item{border:6px solid white;margin:0;padding:0;overflow-x:hidden;overflow-y:auto;display:flex;flex-direction:row;text-align:center;position:relative;width:100%;}
+					.item > div{border:1px solid #fff;padding:7px 25px 0 15px; white-space:nowrap;min-width:133px;text-align:center;}
 					ul{list-style-type:none;padding:0;display:flex; flex-wrap: wrap;}
-					li{flex: 1 1 20%;padding:11px;min-width:480px;}
-					.sortBy{display:none;}
+					li{flex: 1 1 20%;padding:11px;}
+					.sortBy{}
 					hr{clear:both; width:100%;height:6px;background:black;}
 					hr.small{height:1px;background:gray;}
-					#poker-res{padding:0 7%}
+					#poker-res{padding:0 1%}
 					</style>
 					<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 					<script>
 					document.addEventListener("DOMContentLoaded", function() {
 						var options = {
-    							valueNames: [ 'status', 'numHands', 'luck-deal', 'luck-board', 'hand-rank', 'raised','all-ins', 'tourny-date', 'aggression', 'type', 'fold-preflop-s', 'fold-turn-s', 'fold-river-s', 'lost-showdown-s', 'won-s', 'won-folds-s', 'won-showdown-s' ]
+    							valueNames: [ 'status', 'num-hands', 'luck-deal', 'luck-board', 'hand-rank', 'raised','all-ins', 'tourny-date', 'aggression', 'type', 'folds-preflop', 'folds-turn', 'folds-river', 'lost-showdowns', 'wins-all', 'win-folds', 'won-showdowns' ]
 							};
 						var list = new List('poker-res', options);
 					  	document.querySelector('.sortBy').style.display = 'flex';
@@ -78,12 +78,12 @@ handRanksAvg  = handRanksAvg/data.length;
 					  			if(elm.classList.contains('hidden')){
 					  				elm.classList.remove('hidden');
 					  				if(elm.classList.contains('toggle-width')){
-					  					elm.parentNode.classList.add('fullwidth');
+					  					elm.parentNode.classList.add('full-width');
 					  				}
 					  				elm.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
 					  			}else{
 					  				elm.classList.add('hidden');
-					  				elm.parentNode.classList.remove('fullwidth');
+					  				elm.parentNode.classList.remove('full-width');
 					  			}
 					  		}
 					  	}
@@ -93,38 +93,28 @@ handRanksAvg  = handRanksAvg/data.length;
 	html += 'tournaments: ' + data.length;
 	html += '<BR>deal luck avg: ' + luckAvg.toFixed(2);
 	html += '<BR>board luck avg: ' + dealLuckAvg.toFixed(0);
-	html += '<BR>hand rank avg: ' + handRanksAvg.toFixed(0);
+	html += '<BR>hand rank avg: ' + handRanksAvg.toFixed(5);
 	html += '<BR>raise average: ' + (raisedAvg*100).toFixed(0)+'%';
-	html += `<div class="row sortBy">sort by: <a class="sort nav" data-sort="status"> status</a> 
-						<a class="sort nav" data-sort="tourny-date"> date</a> 
-						<a class="sort nav" data-sort="type"> type</a> 
-						<a class="sort nav" data-sort="luck-deal"> deal luck</a> 
-						<a class="sort nav" data-sort="luck-board"> board luck</a> 
-						<a class="sort nav" data-sort="hand-rank"> hand-rank</a> 
-						<a class="sort nav" data-sort="all-ins"> all-ins</a> 
-						<a class="sort nav" data-sort="raised"> raised</a> 
-						<a class="sort nav" data-sort="aggression"> aggression</a> 
-						<a class="sort nav" data-sort="numHands"> num hands</a> 
-						<a class="sort nav" data-sort="lost-showdown-s"> showdown lost</a> 
-						<a class="sort nav" data-sort="fold-preflop-s"> preflop fold</a> 
-						<a class="sort nav" data-sort="fold-turn-s"> turn fold</a> 
-						<a class="sort nav" data-sort="fold-river-s"> river fold</a> 
-						<a class="sort nav" data-sort="won-s"> won</a> 
-						<a class="sort nav" data-sort="won-folds-s"> folds win</a> 
-						<a class="sort nav" data-sort="won-showdown-s"> showdown win</a>
-						</div>
-						<HR>
+	var sortOps = ["status", "tourny-date", "type", "luck-deal", "luck-board", "hand-rank", "all-ins", "raised", "aggression", "num-hands", "lost-showdowns", "folds-preflop", "folds-turn", "folds-river", "wins-all", "win-folds", "won-showdowns"];
+	sortOps.sort();
+	html += '<div class="row sortBy">sort by:';
+	for(var i = 0, length1 = sortOps.length; i < length1; i++){
+		var op = sortOps[i];
+		html += '<a class="sort nav" data-sort="'+op+'">'+op+'</a>';
+	}
+	html += '</div>';
+	html += `<HR>
 					<ul class="list">`;
 	data.forEach(function(item){
-		html += '<li><div style="min-height:120px;"><h4 class="type" style="">'+item.details+'</h4>';
+		html += '<li><div style=""><h4 class="type" style="">'+item.details+'</h4>';
 		html += '<div class="tourny-date" style="display:none;">'+item.details.substring(item.details.lastIndexOf('-')+2)+'</div>';
 		html += '<div class="status">'+item.tourneySum+'</div></div>';
 		html += '<hr class="small">';
 		html += '<div style="">deal luck: <span class="luck-deal">'+item.luck+'</span></div>';
 		html += '<div style="">board luck: <span class="luck-board">'+item.dealLuck+'</span></div>';
-		html += '<div style="">hand ranks: <span class="hand-rank">'+item.handRanks+'</span></div>';
+		html += '<div style="">hand ranks: <span class="hand-rank">'+item.handRanks.toFixed(3)+'</span></div>';
 		html += '<hr class="small">';
-		html += '<div class="numHands row" style="">num hands: '+item.items.length+'</div>';
+		html += '<div class="num-hands row" style="">num hands: '+item.items.length+'</div>';
 		html += '<div class="row">total raises: '+item.raises+ ' / ' + ((item.raises/(item.items.length*4))*100).toFixed(0) + '%</div>';
 		html += '<div class="row">rounds raised: <span class="raised"> '+item.raised+ ' / ' + ((item.raised/item.items.length)*100).toFixed(0) + '%</span></div>';
 		html += '<div class="aggression">aggression: '+(item.raises/item.items.length).toFixed(4)+'</div>';
@@ -172,8 +162,16 @@ function imgName(k){
 			   c:'club'};
 	return obj[k]+'.png';
 }
+function limitStr(str, limit){
+	if(str.length > limit){
+		return str.substring(0, limit) + '..';
+	}
+	return str;
+}
 function wrapItem(data){
-	var html = '<a class="toggleNext">toggle view</a><div class="hidcden toggle-width grid">';
+	var html = '<a class="toggleNext">show all hands</a>';
+	html += '<div class="hidden toggle-width ">';
+	var sortByObjsInner = ["hand-status", "pot-size", "win-loss", "ev", "hand-value"];
 	data.forEach(function(line){
 		html += '<div title="" class="'+ line.event.res +' item" style="'+ (line.action.user.toString().indexOf("all-in") > -1 ? 'border-color:red' : (line.action.user.toString().indexOf("raises") > -1 || line.action.user.toString().indexOf("bets") > -1 ? 'border-color:#43ff38' : '')) +'">';
 			var operat = line.event.res === 'won-folds' || line.event.res === 'won-showdown' ? '+' : '-';
@@ -187,8 +185,8 @@ function wrapItem(data){
 				html += line.board.length ? line.board : 'n/a';
 			html += '</div>';
 			/*******************************/
-			html += '<div>';
-				html += line.handStatus + ' ' + line.handValue + ':1';
+			html += '<div title="'+line.handStatus + ' ' + line.handValue + ':1'+'">';
+				html += limitStr(line.handStatus + ' ' + line.handValue + ':1', 15);
 			html += '</div>';
 			/*******************************/
 			html += '<div>';
@@ -201,7 +199,11 @@ function wrapItem(data){
 			html += '</div>';
 			/*******************************/
 			html += '<div>';
-				html += 'ev: ' + line.hcVal;
+				html += 'stack: $' + line.stacksize;
+			html += '</div>';
+			/*******************************/
+			html += '<div>';
+				html += line.event.res.replace("-", " ");
 			html += '</div>';
 			/*******************************/
 			html += '<div>';
@@ -213,11 +215,11 @@ function wrapItem(data){
 			html += ']</div>';
 			/*******************************/
 			html += '<div>';
-			html += 'BB' + line.ante;
+				html += 'ev: ' + line.hcVal;
 			html += '</div>';
 			/*******************************/
 			html += '<div>';
-				html += 'stack: $' + line.stacksize;
+			html += 'BB' + line.ante;
 			html += '</div>';
 			/*******************************/
 			html += '<div>';
@@ -228,25 +230,35 @@ function wrapItem(data){
 			html += 'num calls: ' + line.numCalls;
 			html += '</div>';
 			/*******************************/
-			html += '<div>';
-			html += line.action.user.length ? line.action.user.toString().replace(/raises/g, '<u>raises</u>').replace(/bets/g, '<u>bets</u>').replace(/all-in/g, '<u style="">ALL-IN</u>') : 'n/a';
+			var userAction = line.action.user.length ? line.action.user.toString() : 'n/a';
+			html += '<div title="'+userAction+'">';
+			html += limitStr(userAction, 30);
 			html += '</div>';
 			/*******************************/
-			html += '<div>';
-				html += line.event.res.replace("-", " ");
+		html += '</div>';
+		if(line.action.all.length){
+		html += '<div class="hand-details full-width">';
+			html += '<a class="toggleNext ">show action</a>';
+			html += '<div class="hidden bgdarker">';
+			for(var i = 0, length1 = line.action.all.length; i < length1; i++){
+				var l = line.action.all[i]
+				html += '<div>' + l + '</div>';
+			}
 			html += '</div>';
-			/*******************************/
-			html += '<div>';
-		html += '<a class="toggleNext ">toggle details</a><div class="hidden bgdarker">';
-		for(var i = 0, length1 = line.action.all.length; i < length1; i++){
-			var l = line.action.all[i]
-			html += '<div>' + l + '</div>';
+		html += '</div>';
 		}
-			html += '</div>';
-		html += '</div>';
-		html += '</div>';
 
 	});
+
+
+
+
+
+
+
+
+
+
 	html += '</div>';
 return html;
 }
