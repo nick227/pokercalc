@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const url = require('url');
 const port = 8080;
-const parser = require('./parse');
-const genHTML = require('./genHTML');
+const pokerParser = require('./parser');
+const htmlWrap = require('./src/htmlWrap');
 app.use(express.static(__dirname + '/public'));
 
 app.use(function(req, res, next) {
@@ -16,10 +16,13 @@ var url2 = '.';
 
 app.get('/', (req, res) => {
 	var queryString = url.parse(req.url).query;
-	parser(url2, function(history){
-		history = genHTML(history);
+	pokerParser(url2, function(history){
+		history = htmlWrap(history);
 		res.send(history);
 	});
 });
+
+
+
 
 app.listen(port, () => console.log(`poker stars app listening on port ${port}!`));
