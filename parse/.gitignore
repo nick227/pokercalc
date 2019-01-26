@@ -2,3 +2,5 @@ node_modules/*
 static/*
 HandHistory/*
 TournSummary/*
+data/*
+app/node_modules/*

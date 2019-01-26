@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"nodemon server.js"
+    "start": "nodemon server.js"
   },
   "keywords": [
     "poker",
@@ -14,8 +14,19 @@
   "author": "nrios",
   "license": "ISC",
   "dependencies": {
+    "compression": "^1.7.3",
+    "d3-node": "^2.1.0",
+    "d3node-linechart": "^0.1.2",
     "express": "^4.16.4",
+    "express-minify-html": "^0.12.0",
+    "memory-cache": "^0.2.0",
     "mysql": "^2.16.0",
+    "nedb": "^1.8.0",
+    "node-cache": "^4.2.0",
+    "node-gzip": "^1.1.2",
     "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "d3node-output": "^1.0.2"
   }
 }
