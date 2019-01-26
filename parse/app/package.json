@@ -1,0 +1,38 @@
+{
+  "name": "poker-vision",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [
+    "poker",
+    "PokerStars"
+  ],
+  "author": "nrios",
+  "license": "ISC",
+  "dependencies": {
+    "dialog": "^0.3.1",
+    "electron": "^4.0.1",
+    "electron-context-menu": "^0.10.1",
+    "nedb-repl": "^1.2.2",
+    "remote": "^0.2.6",
+    "remove": "^0.1.5"
+  },
+  "build": {
+    "appId": "Poker.Report.Funtimes",
+    "mac": {
+      "category": "report.app.poker.fun"
+    },
+    "files": "./build/icon.png"
+  },
+  "devDependencies": {
+    "electron-better-ipc": "^0.1.2",
+    "electron-builder": "^20.38.5",
+    "electron-debug": "^2.0.0",
+    "express": "^4.16.4"
+  }
+}

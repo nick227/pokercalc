@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Poker Report</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+    <input id="hidden-file-input" style="display:none;" type="file" onchange="selectFolder(event);" webkitdirectory mozdirectory msdirectory odirectory directory />
+    <p>history location: <span id="folder-name"></span> <button onclick="setDir(event)">change</button></p>
+        <script>
+
+ const {ipcRenderer: ipc} = require('electron');
+ipc.on('update-directory-response', (event, res) => {
+    console.log(res);
+});
+
+function setDir(e) {
+    e.preventDefault()
+    var hiddenInput = document.getElementById('hidden-file-input')
+    hiddenInput.click();
+}
+function selectFolder(e){
+    e.preventDefault()
+    var div = document.getElementById('folder-name');
+    var folderName = e.target.files[0].path;
+    ipc.send('update-directory', folderName);
+    div.innerHTML = folderName;
+}
+
+        </script>
+    </body>
+</html>
